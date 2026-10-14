@@ -44,10 +44,13 @@
   animation: hold-page-rise-in 280ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
+/* The full-color lockup ships with its own royal-blue plate, so the radius
+   here rounds the artwork itself — soft, but kept well short of a pill. */
 .hold-page__logo {
   width: min(320px, 68vw);
   height: auto;
   display: block;
+  border-radius: 22px;
 }
 
 .hold-page__tagline-block {

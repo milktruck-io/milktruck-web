@@ -8,7 +8,7 @@ export function meta() {
   const title = "Milktruck";
   const description = "Milktruck — the full site is being built. Reach out anytime.";
   const url = "https://milktruck.io/";
-  const image = "https://milktruck.io/assets/logo-wordmark-blue.png";
+  const image = "https://milktruck.io/assets/logos/wordmark/wordmark-blue.png";
 
   return [
     { title },
@@ -33,7 +33,7 @@ export default function Home() {
       <SpeedStripes bars={2} trim={false} style={{ width: "100%", height: 26 }} />
 
       <main className="hold-page__main">
-        <img src="/assets/logo-wordmark-blue.png" alt="Milktruck" className="hold-page__logo" />
+        <img src="/assets/logos/wordmark/wordmark-full-color.png" alt="Milktruck" className="hold-page__logo" />
 
         <div className="hold-page__tagline-block">
           <p className="hold-page__tagline">
