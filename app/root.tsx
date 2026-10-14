@@ -11,7 +11,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
-  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+  { rel: "icon", type: "image/svg+xml", sizes: "any", href: "/favicon.svg?v=2" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
