@@ -1,0 +1,238 @@
+/* PPL That Touch Each Other Trivia — design system tokens.
+ *
+ * Imported from the game routes only. Every token is scoped to `.ppl-stage`
+ * instead of `:root` so the Milktruck brand tokens in app/tokens/ stay
+ * untouched — the two systems share variable names like --border-subtle.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Figtree:wght@400;500;600;700;800&display=swap");
+
+.ppl-stage {
+  /* Studio — warm near-black neutrals for the stage */
+  --studio-950: #0e0b09;
+  --studio-900: #16120f;
+  --studio-800: #211b16;
+  --studio-700: #2e261f;
+  --studio-600: #463b31;
+  --studio-400: #8a7d6c;
+  --studio-200: #d6cab6;
+  /* Cream — paper + text on stage */
+  --cream-50: #fff9ee;
+  --cream-100: #fbf0db;
+  --cream-200: #f1e1c2;
+  /* Marquee gold — primary */
+  --gold-300: #ffe29a;
+  --gold-400: #ffcf5c;
+  --gold-500: #ffb81c;
+  --gold-600: #e09a00;
+  --gold-700: #a86f00;
+  /* Fun accents */
+  --smooch-300: #ffa3b9;
+  --smooch-400: #ff7898;
+  --smooch-500: #ff4f79;
+  --smooch-600: #e8325f;
+  --sky-400: #8ccbff;
+  --sky-500: #5ab4ff;
+  --onair-400: #ff6b5e;
+  --onair-500: #ff3b30;
+  --onair-600: #d92a20;
+  --correct-400: #6be6a0;
+  --correct-500: #2fd27a;
+  --correct-600: #1fa85e;
+
+  /* Semantic */
+  --brand-primary: var(--gold-500);
+  --surface-stage: var(--studio-900);
+  --surface-stage-deep: var(--studio-950);
+  --surface-panel: var(--studio-800);
+  --surface-panel-raised: var(--studio-700);
+  --surface-paper: var(--cream-50);
+  --text-strong: var(--cream-50);
+  --text-body: var(--studio-200);
+  --text-muted: var(--studio-400);
+  --text-on-gold: var(--studio-950);
+  --border-subtle: rgba(255, 240, 215, 0.1);
+  --border-strong: rgba(255, 240, 215, 0.24);
+  --state-correct: var(--correct-500);
+  --state-wrong: var(--onair-500);
+  --focus-ring: var(--gold-300);
+
+  /* Type */
+  --font-display: "Big Shoulders Display", "Figtree", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, sans-serif;
+  --ls-display: 0.01em;
+  --ls-label: 0.12em;
+
+  /* Spacing + radii */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+  --control-h-md: 52px;
+  --content-max: 1200px;
+
+  /* Effects — depth comes from light, not ink */
+  --border-w: 2px;
+  --shadow-panel: inset 0 1px 0 rgba(255, 240, 215, 0.06), 0 14px 32px -14px rgba(0, 0, 0, 0.7);
+  --shadow-button: inset 0 -3px 0 rgba(0, 0, 0, 0.22), inset 0 2px 0 rgba(255, 255, 255, 0.35);
+  --shadow-button-press: inset 0 2px 0 rgba(0, 0, 0, 0.25);
+  --glow-gold: 0 0 0 2px var(--gold-500), 0 0 26px rgba(255, 184, 28, 0.45);
+  --glow-correct: 0 0 0 2px var(--correct-500), 0 0 30px rgba(47, 210, 122, 0.5);
+  --glow-wrong: 0 0 0 2px var(--onair-500), 0 0 22px rgba(255, 59, 48, 0.4);
+  --spotlight: radial-gradient(ellipse 70% 60% at 50% -10%, rgba(255, 207, 92, 0.16), transparent 70%);
+  --marquee-bulbs: radial-gradient(circle, var(--gold-300) 0 3px, rgba(255, 207, 92, 0.35) 3.5px, transparent 6px);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+
+  /* The stage itself: warm black under one overhead spotlight. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--spotlight), var(--surface-stage);
+  background-attachment: fixed;
+  color: var(--text-body);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.ppl-stage *,
+.ppl-stage *::before,
+.ppl-stage *::after {
+  box-sizing: border-box;
+}
+
+.ppl-stage :focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@keyframes ppl-pop-in {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* --- layout -------------------------------------------------------------- */
+
+.ppl-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+}
+
+.ppl-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 16px 28px;
+}
+
+.ppl-wordmark {
+  font: 900 26px/1 var(--font-display);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  color: var(--cream-50);
+}
+
+.ppl-centered {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+
+/* Answer board: one column on a phone, the 2x2 game-show grid on a big screen. */
+.ppl-answers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .ppl-header {
+    padding: 20px 32px;
+  }
+  .ppl-main {
+    padding: 0 32px 32px;
+  }
+  .ppl-answers {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
+/* Display type that survives a 360px-wide phone. */
+.ppl-display {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  color: var(--cream-50);
+  font-size: clamp(34px, 9vw, 64px);
+}
+
+.ppl-display--xl {
+  font-size: clamp(44px, 13vw, 80px);
+}
+
+.ppl-question {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--cream-50);
+  text-wrap: balance;
+  font-size: clamp(22px, 4.4vw, 40px);
+}
+
+.ppl-label {
+  font: 800 12px/1 var(--font-body);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ppl-body {
+  margin: 0;
+  font: 600 16px/1.5 var(--font-body);
+  color: var(--text-body);
+}
+
+.ppl-muted {
+  margin: 0;
+  font: 600 15px/1.5 var(--font-body);
+  color: var(--text-muted);
+}
+
+.ppl-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ppl-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
