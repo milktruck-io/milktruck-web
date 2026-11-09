@@ -179,12 +179,40 @@ cd ../milktruck-api && bin/rails server -p 3001
 cd ../milktruck-web && npm run dev
 ```
 
-Vite bakes this value in **at build time**, so a deploy needs it as a build
-arg, not a runtime secret:
+Vite bakes this value in **at build time**, so it cannot be a runtime secret.
+It is pinned in `fly.toml` under `[build.args]`; change it there if the API
+lands on a different hostname.
+
+## Deploying to Fly
+
+Two apps. **Deploy the API first** — the web build bakes in its URL.
 
 ```sh
-fly deploy --build-arg VITE_TRIVIA_API_URL=https://your-api-host
+# 1. the API (once)
+cd milktruck-api
+fly volumes create milktruck_storage --region iad --size 1   # sqlite lives here
+fly secrets set SECRET_KEY_BASE="$(openssl rand -hex 64)"     # Rails needs this
+fly deploy --ha=false                                         # ONE machine only
+
+# 2. the frontend
+cd ../milktruck-web
+fly deploy
 ```
+
+Three things that matter:
+
+- **`--ha=false`.** The whole game is one sqlite file on one volume, so a
+  second machine cannot serve it. Never scale this app past one.
+- **`SECRET_KEY_BASE`.** There is no `config/master.key` in this checkout, so
+  `credentials.yml.enc` cannot be decrypted — but nothing in the app needs it.
+  Setting `SECRET_KEY_BASE` as a secret satisfies Rails and Devise.
+- **Cold starts.** The API's `fly.toml` has `min_machines_running = 0`, so it
+  sleeps when idle and the first request after a lull takes a few seconds —
+  the join screen may show "Can't reach the game server" once before it wakes.
+  Set it to `1` on show night so the machine stays up; put it back after.
+
+The data lives on the volume, so a redeploy mid-show keeps players and scores.
+Destroying the volume is what wipes them.
 
 ## How it hangs together
 

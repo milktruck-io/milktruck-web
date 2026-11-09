@@ -7,6 +7,11 @@ app = 'milktruck-web'
 primary_region = 'iad'
 
 [build]
+  # Vite inlines this at BUILD time, so it has to be here (or a --build-arg),
+  # not a runtime secret. Must match the trivia API's hostname, or players get
+  # "Can't reach the game server".
+  [build.args]
+    VITE_TRIVIA_API_URL = "https://milktruck-api.fly.dev"
 
 [http_service]
   internal_port = 3000
